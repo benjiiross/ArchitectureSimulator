@@ -12,20 +12,15 @@ public class ALU {
     public static void str() {
     }
 
-    // 3. PUSH <reg>/<var>/<const> : something
-    public static void push(byte something) {
-        Hardware.stack.push(something);
+    // 3. PUSH <reg>/<var>/<const> : value
+    public static void push(byte value) {
+        Hardware.stack.push(value);
     }
 
     // 4. POP <reg>
     // the reg value is the register number
-    public static void pop(int reg) {
-        switch (reg) {
-            case 0 -> Hardware.t0 = Hardware.stack.pop();
-            case 1 -> Hardware.t1 = Hardware.stack.pop();
-            case 2 -> Hardware.t2 = Hardware.stack.pop();
-            case 3 -> Hardware.t3 = Hardware.stack.pop();
-        }
+    public static void pop(Hardware.Register reg) {
+        reg.setValue(Hardware.stack.pop());
     }
 
     // 5. AND <reg1> <reg2>/<var>/<const>

@@ -1,3 +1,5 @@
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Stack;
 
 /**
@@ -23,12 +25,16 @@ public class Hardware {
         public void setValue(int value) {
             this.value = value;
         }
-    };
+    }
 
     // creates a reference to the ALU class without creating an instance of it
-    public static ALU alu = new ALU();
+    public static ALU alu = ALU.getInstance();
 
-    public static final byte[] memory = new byte[4096];
+    // Creates the memory:
+    // - the memory is a dictionary that maps an address to a value
+    // - the memory is static because it is shared by all the instances of the class
+    public static final Dictionary<String, Byte> memory = new Hashtable<>();
+
 
     // the stack is logically locked to 4096 bytes
     public static final Stack<Byte> stack = new Stack<>();

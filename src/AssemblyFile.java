@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class AssemblyFile {
     // The list of instructions
-    public final static ArrayList<String> file = new ArrayList<>();
+    public static final ArrayList<String> instructions = new ArrayList<>();
 
     // function that retrieves the list of instructions from Assembly *.mod7 files
     // for example, path = "assembly1.mod7"
@@ -28,7 +28,7 @@ public class AssemblyFile {
 
             // while there are lines in the file, add them to the list
             while(sc.hasNextLine()) {
-                file.add(sc.nextLine());
+                instructions.add(sc.nextLine());
             }
 
             // close the scanner

@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.*;
 
 /**
@@ -5,5 +6,10 @@ import javax.swing.*;
  * Uses java swing to create a window
  */
 public class Window {
-    // graphic interface
+    public Window() {
+
+        Frame frame = new Frame();
+
+        frame.pack();
+    }
 }

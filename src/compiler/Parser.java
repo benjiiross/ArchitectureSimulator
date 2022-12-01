@@ -1,3 +1,7 @@
+package compiler;
+
+import assembly.AssemblyFile;
+
 /**
  * Class that parses the instructions and calls the corresponding methods
  * from the AssemblyFile class.

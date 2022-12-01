@@ -1,3 +1,4 @@
+package hardware;
 /**
  * Class ALU
  * The ALU executes arithmetic and logic operations on the data in the registers.

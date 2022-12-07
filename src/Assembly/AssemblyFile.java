@@ -35,7 +35,6 @@ public class AssemblyFile {
             sc.close();
         }
         catch (FileNotFoundException e) {
-            System.out.println("File not found");
             e.printStackTrace();
         }
     }

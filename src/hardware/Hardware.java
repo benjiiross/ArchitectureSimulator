@@ -7,10 +7,10 @@ import java.util.Stack;
  * the ALU, the registers, the memory, the stack
  */
 public class Hardware {
+
     /* Registers that simulates the registers of the computer.
      * The enum keyword is used to create a list of constants.
      * We don't need a constructor because the values are initialized to 0.
-     * TODO: ask for register value type
      */
     public enum Register {
         // register fields
@@ -21,7 +21,7 @@ public class Hardware {
 
         private int value;
         public int getValue() {
-            return value;
+            return this.value;
         }
         public void setValue(int value) {
             this.value = value;
@@ -115,7 +115,7 @@ public class Hardware {
             if (value1 == value2) {
                 jmp(label);
             } else {
-                jmp(label + 1);
+                jmp(Hardware.programCounter + 1);
             }
         }
 
@@ -124,7 +124,7 @@ public class Hardware {
             if (value1 != value2) {
                 jmp(label);
             } else {
-                jmp(label + 1);
+                jmp(Hardware.programCounter + 1);
             }
         }
 
@@ -133,7 +133,7 @@ public class Hardware {
             if (value1 > value2) {
                 jmp(label);
             } else {
-                jmp(label + 1);
+                jmp(Hardware.programCounter + 1);
             }
         }
 
@@ -142,7 +142,7 @@ public class Hardware {
             if (value1 < value2) {
                 jmp(label);
             } else {
-                jmp(label + 1);
+                jmp(Hardware.programCounter + 1);
             }
         }
 
@@ -155,5 +155,15 @@ public class Hardware {
         public static void hlt() {
             System.exit(0);
         }
+    }
+
+    public static void resetData() {
+        Hardware.Register.T0.setValue(0);
+        Hardware.Register.T1.setValue(0);
+        Hardware.Register.T2.setValue(0);
+        Hardware.Register.T3.setValue(0);
+        Hardware.memory.clear();
+        Hardware.stack.clear();
+        Hardware.programCounter = 0;
     }
 }

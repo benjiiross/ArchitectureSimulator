@@ -73,7 +73,7 @@ public class Interpreter {
             case "BNE" -> Hardware.ALU.bne(val1, val2, label);
             case "BBG" -> Hardware.ALU.bbg(val1, val2, label);
             case "BSM" -> Hardware.ALU.bsm(val1, val2, label);
-            case "JMP" -> Hardware.ALU.jmp(val1);
+            case "JMP" -> Hardware.ALU.jmp(label);
             case "HLT" -> Hardware.ALU.hlt();
             case "SRL" -> Hardware.ALU.srl(register, val1);
             case "SLL" -> Hardware.ALU.sll(register, val1);
@@ -99,10 +99,9 @@ public class Interpreter {
         else if (s.contains("+")) {
             int variableAddress = Hardware.variables.get(s.substring(0, s.indexOf('+')));
             int labelAddress = Integer.parseInt(s.substring(s.indexOf('+') + 1));
-            System.out.println(variableAddress + labelAddress);
             // if current instruction is lda
             if (AssemblyFile.instructions.get(Hardware.programCounter).contains("LDA")) {
-                return Hardware.memory.get(variableAddress + labelAddress);
+                return Hardware.memory[variableAddress + labelAddress];
             } else {
                 return variableAddress + labelAddress;
             }
@@ -112,7 +111,7 @@ public class Interpreter {
             if (AssemblyFile.instructions.get(Hardware.programCounter).contains("STR")) {
                 return Hardware.variables.get(s);
             } else {
-                return Hardware.memory.get(Hardware.variables.get(s));
+                return Hardware.memory[Hardware.variables.get(s)];
             }
         }
         // else the string is a number, return the number

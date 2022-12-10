@@ -89,7 +89,7 @@ public class Window extends JFrame {
                 resetSimulationButton.setEnabled(false);
             } else {
                 JOptionPane.showMessageDialog(fileChooser,
-                        "Please select a correct filename.",
+                        "Please select a correct file / filename.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -226,7 +226,7 @@ public class Window extends JFrame {
         String[] variables = Hardware.variables.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
                 .map(entry -> entry.getKey() + " (0x" + String.format("%04X", entry.getValue()) + ") "
-                        + Hardware.memory.get(entry.getValue()))
+                        + Hardware.memory[entry.getValue()])
                 .toArray(String[]::new);
 
         variablesList.setListData(variables);

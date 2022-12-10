@@ -80,6 +80,7 @@ public class Parser {
         while (lineIndex < AssemblyFile.instructions.size()) {
             instruction = AssemblyFile.instructions.get(lineIndex).split(" ");
 
+            System.out.println(instruction[0]);
             // successful data section
             if (instruction[0].equals("#CODE")) {
                 return;
@@ -104,8 +105,9 @@ public class Parser {
                     errorMessage = "variable at line " + lineIndex + " is already in memory";
                     return;
                 }
-                Hardware.memory.add(Integer.parseInt(instruction[1]));
-                Hardware.variables.put(instruction[0], Hardware.memory.size() - 1);
+                Hardware.logicalSize++;
+                Hardware.variables.put(instruction[0], Hardware.logicalSize-1);
+                Hardware.memory[Hardware.logicalSize-1] = Integer.parseInt(instruction[1]);
 
                 AssemblyFile.instructions.remove(lineIndex);
             }
@@ -313,6 +315,13 @@ public class Parser {
                     else if (instruction.length == 1 && instruction[0].matches("^[a-zA-Z]+:$")) {
                         // add the label to the labels hashmap
                         // the label is the label substring without the :
+                        if (Hardware.labels.containsKey(instruction[0].substring(0, instruction[0].length() - 1))) {
+                            isValid = false;
+                            errorMessage ="Label \""
+                                    + instruction[0].substring(0, instruction[0].length() - 1)
+                                    + "\" is already defined";
+                            return;
+                        }
                         Hardware.labels.put(instruction[0].substring(0, instruction[0].length() - 1), lineIndex);
 
                         // remove the label from the instructions list
@@ -340,7 +349,7 @@ public class Parser {
         }
 
         // if an LDA or STR instruction has an index access bigger than the last index of the array
-        if (maxMemoryIndex > Hardware.memory.size() - 1) {
+        if (maxMemoryIndex > Hardware.variables.size() - 1) {
             isValid = false;
             errorMessage = "Memory overflow";
         }

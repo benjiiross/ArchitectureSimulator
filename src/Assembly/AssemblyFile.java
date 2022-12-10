@@ -20,6 +20,8 @@ public class AssemblyFile {
     // for example, path = "assembly1.mod7"
     public static void importFile(String path) {
         try {
+            instructions.clear();
+
             // create a new file object
             file = new File(path);
 

@@ -1,4 +1,8 @@
 package hardware;
+
+import compiler.Interpreter;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -29,12 +33,15 @@ public class Hardware {
     }
 
     // Creates the memory:
-    // - the memory is a dictionary that maps an address to a value
+    // - the memory is an arraylist of integers
     // - the memory is static because it is shared by all the instances of the class
-    public static final HashMap<String, Integer> memory = new HashMap<>();
+    public static final ArrayList<Integer> memory = new ArrayList<>();
 
-    // the stack is logically locked to 4096 int
+    // this hashmap is used to store the variables and their addresses in memory
+    public static final HashMap<String, Integer> variables = new HashMap<>();
     public static final Stack<Integer> stack = new Stack<>();
+
+    public static final HashMap<String, Integer> labels = new HashMap<>();
 
     // programCounter is a variable that stores the next instruction to be executed
     public static int programCounter = 0;
@@ -46,8 +53,9 @@ public class Hardware {
         }
 
         // 2. STR <var> <reg>/<const>
-        public static void str(String var, int value) {
-            Hardware.memory.put(var, value);
+        // gets the address of the variable and stores the value in the memory
+        public static void str(int var, int value) {
+            Hardware.memory.set(var, value);
         }
 
         // 3. PUSH <reg>/<var>/<const> : value
@@ -148,22 +156,37 @@ public class Hardware {
 
         // 19. JMP <LABEL>
         public static void jmp(int label) {
+            System.out.println("Jumping to " + label);
             Hardware.programCounter = label;
         }
 
         // 20. HLT
         public static void hlt() {
-            System.exit(0);
+            Interpreter.isRunning = false;
+            Hardware.programCounter = -1;
+        }
+
+        // 21. SRL <reg> <const>
+        public static void srl(Hardware.Register reg, int value) {
+            reg.setValue(reg.getValue() << value);
+        }
+
+        // 22. SRR <reg> <const>
+        public static void sll(Hardware.Register reg, int value) {
+            reg.setValue(reg.getValue() >> value);
         }
     }
 
     public static void resetData() {
+        Interpreter.isRunning = false;
         Hardware.Register.T0.setValue(0);
         Hardware.Register.T1.setValue(0);
         Hardware.Register.T2.setValue(0);
         Hardware.Register.T3.setValue(0);
-        Hardware.memory.clear();
         Hardware.stack.clear();
+        Hardware.memory.clear();
+        Hardware.variables.clear();
+        Hardware.labels.clear();
         Hardware.programCounter = 0;
     }
 }

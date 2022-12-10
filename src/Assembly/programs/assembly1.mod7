@@ -12,5 +12,6 @@ RES 0
 LDA T0 A
 LDA T1 B
 ADD T0 T1
+Fibonacci:
 STR RES T0
 HLT

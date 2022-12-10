@@ -1,0 +1,20 @@
+#DATA
+A 3
+B 6
+RES 0
+
+#CODE
+LDA T0 A
+LDA T1 A+1
+ADD T0 T1
+LDA T1 B
+ADD T0 T1
+
+!JMP end
+BEQ T0 15 end
+
+ADD T0 T0
+
+end:
+STR B+1 T0
+HLT

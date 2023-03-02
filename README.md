@@ -5,6 +5,6 @@ This project is a computer that can read Assembly x86 language made in full java
 
 We made this project with [Julie](
   https://github.com/juliele1) and [Jules](
-  https://github.com/juliele1).
+  https://github.com/juliogver).
 
 Feel free to explore the code!
